@@ -1,0 +1,40 @@
+:root {
+  background-color: black;
+  height: 100dvh;
+  accent-color: black;
+  --depth: 20%;
+}
+
+input {
+  display: block;
+  /*   margin-inline: auto; */
+}
+
+body {
+  background-color: red;
+  height: 100%;
+  /*   clip-path: shape(
+  from 25% 25%,
+  hline to 75%,
+  vline to 100%,
+  curve to 25% 100% with 75% 25% / 25% 25%,
+  close
+  ); */
+  align-content: center;
+  justify-items: center;
+  clip-path: shape(
+    from 10% 10%,
+    curve to 20% var(--depth) with 15% 10% / 15% var(--depth),
+    curve to 30% 10% with 25% var(--depth) / 25% 10%,
+    curve to 40% var(--depth) with 35% 10% / 35% var(--depth),
+    curve to 50% 10% with 45% var(--depth) / 45% 10%,
+    curve to 60% var(--depth) with 55% 10% / 55% var(--depth),
+    curve to 70% 10% with 65% var(--depth) / 65% 10%,
+    curve to 80% var(--depth) with 75% 10% / 75% var(--depth),
+    curve to 90% 10% with 85% var(--depth) / 85% 10%,
+    hline to 90%,
+    vline to 90%,
+    hline to 10%,
+    close
+  );
+}
