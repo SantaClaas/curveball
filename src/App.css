@@ -7,6 +7,7 @@
   --y1: 10%;
   --y2: 20%;
   --control-x-offset: 5%;
+  --control-y-offset: 0%;
 }
 
 input {
@@ -22,6 +23,15 @@ input {
   result: calc(--curve-x-start(var(--n)) + var(--valey-width) / 2);
 }
 
+@function --curve-y-end(--n <number>) {
+  /* 0 if n is even, 1 if odd */
+  --remainder: mod(var(--n), 2);
+  /* If odd return y2, else y1. Not sure if the experimental CSS if could be used instead */
+  result: calc(
+    var(--y2) * var(--remainder) + var(--y1) * calc(1 - var(--remainder))
+  );
+}
+
 @function --control-x1(--n <number>) {
   result: calc(--curve-x-start(var(--n)) + var(--control-x-offset));
 }
@@ -30,29 +40,40 @@ input {
   result: calc(--curve-x-end(var(--n)) - var(--control-x-offset));
 }
 
+/* If even return y1, else y2 */
+@function --control-y1(--n <number>) {
+  /* 0 if n is even, 1 if odd */
+  --remainder: mod(var(--n), 2);
+  /* If even return y1, else y2. Not sure if the experimental CSS if could be used instead */
+  result: calc(
+    var(--y1) * var(--remainder) + var(--y2) * calc(1 - var(--remainder))
+  );
+}
+
 body {
   background-color: red;
   height: 100%;
   align-content: center;
   justify-items: center;
+  --test: --control-y1(1);
   clip-path: shape(
     from var(--starting-x) var(--y1),
-    curve to --curve-x-end(1) var(--y2) with --control-x1(1) var(--y1) /
-      --control-x2(1) var(--y2),
-    curve to --curve-x-end(2) var(--y1) with --control-x1(2) var(--y2) /
-      --control-x2(2) var(--y1),
-    curve to --curve-x-end(3) var(--y2) with --control-x1(3) var(--y1) /
-      --control-x2(3) var(--y2),
-    curve to --curve-x-end(4) var(--y1) with --control-x1(4) var(--y2) /
-      --control-x2(4) var(--y1),
-    curve to --curve-x-end(5) var(--y2) with --control-x1(5) var(--y1) /
-      --control-x2(5) var(--y2),
-    curve to --curve-x-end(6) var(--y1) with --control-x1(6) var(--y2) /
-      --control-x2(6) var(--y1),
-    curve to --curve-x-end(7) var(--y2) with --control-x1(7) var(--y1) /
-      --control-x2(7) var(--y2),
-    curve to --curve-x-end(8) var(--y1) with --control-x1(8) var(--y2) /
-      --control-x2(8) var(--y1),
+    curve to --curve-x-end(1) --curve-y-end(1) with --control-x1(1)
+      --control-y1(1) / --control-x2(1) var(--y2),
+    curve to --curve-x-end(2) --curve-y-end(2) with --control-x1(2)
+      --control-y1(2) / --control-x2(2) var(--y1),
+    curve to --curve-x-end(3) --curve-y-end(3) with --control-x1(3)
+      --control-y1(3) / --control-x2(3) var(--y2),
+    curve to --curve-x-end(4) --curve-y-end(4) with --control-x1(4)
+      --control-y1(4) / --control-x2(4) var(--y1),
+    curve to --curve-x-end(5) --curve-y-end(5) with --control-x1(5)
+      --control-y1(5) / --control-x2(5) var(--y2),
+    curve to --curve-x-end(6) --curve-y-end(6) with --control-x1(6)
+      --control-y1(6) / --control-x2(6) var(--y1),
+    curve to --curve-x-end(7) --curve-y-end(7) with --control-x1(7)
+      --control-y1(7) / --control-x2(7) var(--y2),
+    curve to --curve-x-end(8) --curve-y-end(8) with --control-x1(8)
+      --control-y1(8) / --control-x2(8) var(--y1),
     hline to 90%,
     vline to 90%,
     hline to var(--starting-x),
