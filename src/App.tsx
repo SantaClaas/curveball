@@ -14,10 +14,13 @@ function App() {
     document.documentElement.style.setProperty("--y2", y2() + "%")
   );
 
-  const [slope, setSlope] = createSignal(0);
+  const [controlXOffset, setControlXOffset] = createSignal(5);
 
   createEffect(() =>
-    document.documentElement.style.setProperty("--slope", slope() + "%")
+    document.documentElement.style.setProperty(
+      "--control-x-offset",
+      controlXOffset() + "%"
+    )
   );
 
   return (
@@ -38,13 +41,13 @@ function App() {
         value="20"
         onInput={(event) => setY2(+event.currentTarget.value)}
       />
-      <label for="slope">Slope</label>
+      <label for="control-x-offset">Control X1/X2 Offset</label>
       <input
-        id="slope"
+        id="control-x-offset"
         type="range"
         max="100"
-        value="0"
-        onInput={(event) => setSlope(+event.currentTarget.value)}
+        value="5"
+        onInput={(event) => setControlXOffset(+event.currentTarget.value)}
       />
     </>
   );

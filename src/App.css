@@ -6,6 +6,7 @@
   --starting-x: 10%;
   --y1: 10%;
   --y2: 20%;
+  --control-x-offset: 5%;
 }
 
 input {
@@ -13,8 +14,20 @@ input {
   /*   margin-inline: auto; */
 }
 
-@function --curve-x(--n <number>) {
-  result: calc(var(--n) * var(--starting-x) + var(--valey-width) / 2);
+@function --curve-x-start(--n <number>) {
+  result: calc(var(--n) * var(--starting-x));
+}
+
+@function --curve-x-end(--n <number>) {
+  result: calc(--curve-x-start(var(--n)) + var(--valey-width) / 2);
+}
+
+@function --control-x1(--n <number>) {
+  result: calc(--curve-x-start(var(--n)) + var(--control-x-offset));
+}
+
+@function --control-x2(--n <number>) {
+  result: calc(--curve-x-end(var(--n)) - var(--control-x-offset));
 }
 
 body {
@@ -24,14 +37,22 @@ body {
   justify-items: center;
   clip-path: shape(
     from var(--starting-x) var(--y1),
-    curve to --curve-x(1) var(--y2) with 15% var(--y1) / 15% var(--y2),
-    curve to --curve-x(2) var(--y1) with 25% var(--y2) / 25% var(--y1),
-    curve to --curve-x(3) var(--y2) with 35% var(--y1) / 35% var(--y2),
-    curve to --curve-x(4) var(--y1) with 45% var(--y2) / 45% var(--y1),
-    curve to --curve-x(5) var(--y2) with 55% var(--y1) / 55% var(--y2),
-    curve to --curve-x(6) var(--y1) with 65% var(--y2) / 65% var(--y1),
-    curve to --curve-x(7) var(--y2) with 75% var(--y1) / 75% var(--y2),
-    curve to --curve-x(8) var(--y1) with 85% var(--y2) / 85% var(--y1),
+    curve to --curve-x-end(1) var(--y2) with --control-x1(1) var(--y1) /
+      --control-x2(1) var(--y2),
+    curve to --curve-x-end(2) var(--y1) with --control-x1(2) var(--y2) /
+      --control-x2(2) var(--y1),
+    curve to --curve-x-end(3) var(--y2) with --control-x1(3) var(--y1) /
+      --control-x2(3) var(--y2),
+    curve to --curve-x-end(4) var(--y1) with --control-x1(4) var(--y2) /
+      --control-x2(4) var(--y1),
+    curve to --curve-x-end(5) var(--y2) with --control-x1(5) var(--y1) /
+      --control-x2(5) var(--y2),
+    curve to --curve-x-end(6) var(--y1) with --control-x1(6) var(--y2) /
+      --control-x2(6) var(--y1),
+    curve to --curve-x-end(7) var(--y2) with --control-x1(7) var(--y1) /
+      --control-x2(7) var(--y2),
+    curve to --curve-x-end(8) var(--y1) with --control-x1(8) var(--y2) /
+      --control-x2(8) var(--y1),
     hline to 90%,
     vline to 90%,
     hline to var(--starting-x),
